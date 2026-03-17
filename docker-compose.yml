@@ -1,0 +1,15 @@
+services:
+  events-service:
+    build: ./events-service
+    ports:
+      - "8081:8081"
+
+  notifications-service:
+    build: ./notifications-service
+    ports:
+      - "8082:8082"
+
+  ticketing-service:
+    build: ./ticketing-service
+    ports:
+      - "8083:8083"
