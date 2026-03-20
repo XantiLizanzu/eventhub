@@ -3,13 +3,25 @@ services:
     build: ./events-service
     ports:
       - "8081:8081"
+    volumes:
+      - ./events-service/target:/events-service/target
+    environment:
+      - SPRING_DEVTOOLS_RESTART_ENABLED=true
 
   notifications-service:
     build: ./notifications-service
     ports:
       - "8082:8082"
+    volumes:
+      - ./notifications-service/target:/notifications-service/target
+    environment:
+      - SPRING_DEVTOOLS_RESTART_ENABLED=true
 
   ticketing-service:
     build: ./ticketing-service
     ports:
       - "8083:8083"
+    volumes:
+      - ./ticketing-service/target:/ticketing-service/target
+    environment:
+      - SPRING_DEVTOOLS_RESTART_ENABLED=true
