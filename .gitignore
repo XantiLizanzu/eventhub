@@ -1,0 +1,69 @@
+# Java
+*.class
+*.jar
+*.war
+*.ear
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Eclipse
+.bin/
+.gen/
+.settings/
+.springBeans/
+.classpath
+.project
+
+# IntelliJ
+*.iml
+.idea/
+out/
+
+# VS Code
+.vscode/
+
+# Mac
+.DS_Store
+
+# Docker
+docker-compose.override.yml
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+.env*.local
+
+# Gradle
+.gradle/
+build/
+
+# Node
+node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Database
+*.db
+*.sqlite
+
+# OS generated files
+*.swp
+*.swo
