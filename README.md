@@ -1,24 +1,39 @@
 # Running development
 
-Run a single project:
-
+## Run a single project
+This is for development purposes only.
 ```bash
-> cd <project-name>
-> ./mvnw spring-boot:run
+cd <project-name>
+./mvnw spring-boot:run
 ```
 
-Run all projects using Docker compose:
+## Using docker compose 
+To run all services using Docker compose, first build the images:
 ```bash
-> docker-compose up
+docker compose build
+```
+
+Then start up all containers:
+```bash
+docker compose up
 ```
 
 For development purposes, hot reload is enabled. When making changes, save the file and build the project (`F9`) again. 
 To make it work with Docker, the `target` folders are added as volumes.
 
-# Todo's
+# Running production
 
-- [x] Create 3 Maven projects with Spring Initializr
-- [x] Add hello world endpoints
-- [x] Add hot reload
-- [x] Add Dockerfiles with the build and run phase
-- [x] Add a Docker compose file with volumes
+## Using docker compose 
+To run all services using Docker compose, first build the images:
+```bash
+docker compose -f docker-compose.prod.yml build
+```
+
+Then start up all containers:
+```bash
+docker compose up
+```
+
+## Environment variables
+
+Create a `.env` file containing all environment variables.
