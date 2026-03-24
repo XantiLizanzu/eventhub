@@ -1,5 +1,7 @@
 # Running development
 
+First, rename `.env.template` to `.env` and update in the values if necessary.
+
 ## Run a single project
 This is for development purposes only.
 ```bash
@@ -36,4 +38,4 @@ docker compose up
 
 ## Environment variables
 
-Create a `.env` file containing all environment variables.
+Rename `.env.template` to `.env` and update in the values if necessary.
