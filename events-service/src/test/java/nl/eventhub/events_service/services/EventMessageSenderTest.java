@@ -29,7 +29,7 @@ class EventMessageSenderTest {
 
     @BeforeEach
     void setUp() {
-        testEvent = new Event("Test Event", "Test Description", LocalDateTime.now(), "Test Location");
+        testEvent = new Event("Test Event", "Test Description", LocalDateTime.now(), "Test Location", 10);
         testEvent.setId(1L);
     }
 

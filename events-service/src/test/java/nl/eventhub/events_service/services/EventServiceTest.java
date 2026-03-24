@@ -35,14 +35,14 @@ class EventServiceTest {
 
     @BeforeEach
     void setUp() {
-        testEvent = new Event("Test Event", "Test Description", LocalDateTime.now(), "Test Location");
+        testEvent = new Event("Test Event", "Test Description", LocalDateTime.now(), "Test Location", 10);
         testEvent.setId(1L);
     }
 
     @Test
     void getAllEvents_shouldReturnAllEvents() {
         // Arrange
-        Event event2 = new Event("Event 2", "Description 2", LocalDateTime.now(), "Location 2");
+        Event event2 = new Event("Event 2", "Description 2", LocalDateTime.now(), "Location 2", 5);
         when(eventRepository.findAll()).thenReturn(Arrays.asList(testEvent, event2));
 
         // Act
@@ -96,7 +96,7 @@ class EventServiceTest {
     @Test
     void updateEvent_shouldUpdateAndReturnEvent() {
         // Arrange
-        Event updatedDetails = new Event("Updated Name", "Updated Description", LocalDateTime.now(), "Updated Location");
+        Event updatedDetails = new Event("Updated Name", "Updated Description", LocalDateTime.now(), "Updated Location", 20);
         when(eventRepository.findById(anyLong())).thenReturn(Optional.of(testEvent));
         when(eventRepository.save(any(Event.class))).thenReturn(testEvent);
         doNothing().when(eventMessageSender).sendEventUpdatedMessage(any(Event.class));

@@ -34,15 +34,15 @@ class EventControllerTest {
 
     @BeforeEach
     void setUp() {
-        testEvent = new Event("Test Event", "Test Description", LocalDateTime.now(), "Test Location");
+        testEvent = new Event("Test Event", "Test Description", LocalDateTime.now(), "Test Location", 10);
         testEvent.setId(1L);
-        creationDTO = new EventController.EventCreationDTO("Test Event", "Test Description", LocalDateTime.now(), "Test Location");
+        creationDTO = new EventController.EventCreationDTO("Test Event", "Test Description", LocalDateTime.now(), "Test Location", 5);
     }
 
     @Test
     void getAllEvents_shouldReturnListOfEvents() {
         // Arrange
-        Event event2 = new Event("Event 2", "Description 2", LocalDateTime.now(), "Location 2");
+        Event event2 = new Event("Event 2", "Description 2", LocalDateTime.now(), "Location 2", 5);
         when(eventService.getAllEvents()).thenReturn(Arrays.asList(testEvent, event2));
 
         // Act
@@ -97,7 +97,7 @@ class EventControllerTest {
     @Test
     void updateEvent_shouldUpdateAndReturnEvent() {
         // Arrange
-        Event updatedEvent = new Event("Updated Name", "Updated Description", LocalDateTime.now(), "Updated Location");
+        Event updatedEvent = new Event("Updated Name", "Updated Description", LocalDateTime.now(), "Updated Location", 20);
         when(eventService.updateEvent(anyLong(), any(Event.class))).thenReturn(updatedEvent);
 
         // Act
