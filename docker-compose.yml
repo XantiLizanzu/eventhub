@@ -5,8 +5,6 @@ services:
       - "${EVENTS_SERVICE_PORT}:${EVENTS_SERVICE_PORT}"
     volumes:
       - ./events-service/target:/events-service/target
-    env_file:
-      - .env
     environment:
       - SPRING_DEVTOOLS_RESTART_ENABLED=true
 
@@ -16,8 +14,6 @@ services:
       - "${NOTIFICATIONS_SERVICE_PORT}:${NOTIFICATIONS_SERVICE_PORT}"
     volumes:
       - ./notifications-service/target:/notifications-service/target
-    env_file:
-      - .env
     environment:
       - SPRING_DEVTOOLS_RESTART_ENABLED=true
 
@@ -27,8 +23,24 @@ services:
       - "${TICKETING_SERVICE_PORT}:${TICKETING_SERVICE_PORT}"
     volumes:
       - ./ticketing-service/target:/ticketing-service/target
-    env_file:
-      - .env
+    environment:
+      - SPRING_DEVTOOLS_RESTART_ENABLED=true
+
+  payments-service:
+    build: ./payments-service
+    ports:
+      - "${PAYMENTS_SERVICE_PORT}:${PAYMENTS_SERVICE_PORT}"
+    volumes:
+      - ./payments-service/target:/payments-service/target
+    environment:
+      - SPRING_DEVTOOLS_RESTART_ENABLED=true
+
+  users-service:
+    build: ./users-service
+    ports:
+      - "${USERS_SERVICE_PORT}:${USERS_SERVICE_PORT}"
+    volumes:
+      - ./users-service/target:/users-service/target
     environment:
       - SPRING_DEVTOOLS_RESTART_ENABLED=true
 
@@ -37,5 +49,3 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
-    env_file:
-      - .env
