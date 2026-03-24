@@ -1,5 +1,6 @@
 package nl.eventhub.events_service.controllers;
 
+import nl.eventhub.events_service.dtos.EventCreationDTO;
 import nl.eventhub.events_service.models.Event;
 import nl.eventhub.events_service.services.EventService;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,13 +31,13 @@ class EventControllerTest {
     private EventController eventController;
 
     private Event testEvent;
-    private EventController.EventCreationDTO creationDTO;
+    private EventCreationDTO creationDTO;
 
     @BeforeEach
     void setUp() {
         testEvent = new Event("Test Event", "Test Description", LocalDateTime.now(), "Test Location", 10);
         testEvent.setId(1L);
-        creationDTO = new EventController.EventCreationDTO("Test Event", "Test Description", LocalDateTime.now(), "Test Location", 5);
+        creationDTO = new EventCreationDTO("Test Event", "Test Description", LocalDateTime.now(), "Test Location", 5);
     }
 
     @Test

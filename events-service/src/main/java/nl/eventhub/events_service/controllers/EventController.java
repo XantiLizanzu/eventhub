@@ -2,13 +2,13 @@ package nl.eventhub.events_service.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import nl.eventhub.events_service.dtos.EventCreationDTO;
 import nl.eventhub.events_service.models.Event;
 import nl.eventhub.events_service.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +19,6 @@ public class EventController {
     
     @Autowired
     private EventService eventService;
-
-    public record EventCreationDTO(String name, String description, LocalDateTime dateTime, String location, int totalTicketCount) {}
 
     @GetMapping
     @Operation(summary = "Get all events", description = "Retrieves a list of all available events")
@@ -38,8 +36,7 @@ public class EventController {
     @PostMapping
     @Operation(summary = "Create a new event")
     public Event createEvent(@RequestBody EventCreationDTO request) {
-        Event event = new Event(request.name(), request.description(), request.dateTime(), request.location(), request.totalTicketCount());
-        return eventService.createEvent(event);
+        return eventService.createEvent(request);
     }
 
     @PutMapping("/{id}")
