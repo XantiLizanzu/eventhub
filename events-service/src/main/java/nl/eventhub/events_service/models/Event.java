@@ -15,16 +15,18 @@ public class Event {
     private String description;
     private LocalDateTime dateTime;
     private String location;
+    private int totalTicketCount;
 
     // Constructors
     public Event() {
     }
 
-    public Event(String name, String description, LocalDateTime dateTime, String location) {
+    public Event(String name, String description, LocalDateTime dateTime, String location, int totalTicketCount) {
         this.name = name;
         this.description = description;
         this.dateTime = dateTime;
         this.location = location;
+        this.totalTicketCount = totalTicketCount;
     }
 
     // Getters and Setters
@@ -66,5 +68,13 @@ public class Event {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public int getTotalTicketCount() {
+        return totalTicketCount;
+    }
+
+    public void setTotalTicketCount(int totalTicketCount) {
+        this.totalTicketCount = totalTicketCount;
     }
 }
