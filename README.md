@@ -18,7 +18,7 @@ Then start up all containers:
 docker compose up
 ```
 
-For development purposes, hot reload is enabled. When making changes, save the file and build the project (`F9`) again. 
+For development purposes, hot reload is enabled. When making changes, save the file and build the project (`Ctrl+F9`) again. 
 To make it work with Docker, the `target` folders are added as volumes.
 
 # Running production
@@ -37,3 +37,8 @@ docker compose up
 ## Environment variables
 
 Create a `.env` file containing all environment variables.
+
+# IntelliJ development
+
+If you are using IntelliJ, you might need to add the different services as modules. To do so, press `Ctrl+Shift+Alt+S`
+to the project structure dialog. Then go to `Modules > + > Import Module` and import every service as a Maven project.
