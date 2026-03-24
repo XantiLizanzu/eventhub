@@ -23,7 +23,7 @@ class EventUpdateListenerTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        testEvent = new Event(1L, "Test Event", "Test Description", LocalDateTime.now(), "Test Location");
+        testEvent = new Event(1L, "Test Event", "Test Description", LocalDateTime.now(), "Test Location", 10);
         
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.findAndRegisterModules();
