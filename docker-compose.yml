@@ -6,7 +6,7 @@ services:
     volumes:
       - ./events-service/target:/events-service/target
     env_file:
-      - .env.dev
+      - .env
     environment:
       - SPRING_DEVTOOLS_RESTART_ENABLED=true
 
@@ -17,7 +17,7 @@ services:
     volumes:
       - ./notifications-service/target:/notifications-service/target
     env_file:
-      - .env.dev
+      - .env
     environment:
       - SPRING_DEVTOOLS_RESTART_ENABLED=true
 
@@ -28,7 +28,7 @@ services:
     volumes:
       - ./ticketing-service/target:/ticketing-service/target
     env_file:
-      - .env.dev
+      - .env
     environment:
       - SPRING_DEVTOOLS_RESTART_ENABLED=true
 
@@ -38,4 +38,4 @@ services:
       - "5672:5672"
       - "15672:15672"
     env_file:
-      - .env.dev
+      - .env
