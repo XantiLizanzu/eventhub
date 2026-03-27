@@ -1,22 +1,28 @@
 package nl.eventhub.notifications_service.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rabbitmq.client.Channel;
 import nl.eventhub.notifications_service.models.Event;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class EventUpdateListenerTest {
 
     @InjectMocks
     private EventUpdateListener eventUpdateListener;
+
+    @Mock
+    private Channel channel;
 
     private Event testEvent;
     private String testEventJson;
@@ -31,23 +37,25 @@ class EventUpdateListenerTest {
     }
 
     @Test
-    void handleEventUpdated_shouldProcessValidEventMessage() {
+    void handleEventUpdated_shouldProcessValidEventMessage() throws Exception {
         // Act
-        eventUpdateListener.handleEventUpdated(testEventJson);
+        eventUpdateListener.handleEventUpdated(testEventJson, channel, 1L);
 
         // Assert - The method should not throw any exceptions
         // Success is verified by reaching this point without exceptions
+        verify(channel, times(1)).basicAck(1L, false);
     }
 
     @Test
-    void handleEventUpdated_shouldHandleInvalidJsonGracefully() {
+    void handleEventUpdated_shouldHandleInvalidJsonGracefully() throws Exception {
         // Arrange
         String invalidJson = "{\"invalid\": \"json\", \"missing\": \"fields\"}";
 
-        // Act & Assert
-        assertDoesNotThrow(() -> {
-            eventUpdateListener.handleEventUpdated(invalidJson);
-        });
+        // Act
+        eventUpdateListener.handleEventUpdated(invalidJson, channel, 1L);
+        
+        // Assert
+        verify(channel, times(1)).basicNack(1L, false, true);
     }
 
     @Test
@@ -57,7 +65,7 @@ class EventUpdateListenerTest {
 
         // Act & Assert
         assertDoesNotThrow(() -> {
-            eventUpdateListener.handleEventUpdated(emptyMessage);
+            eventUpdateListener.handleEventUpdated(emptyMessage, channel, 1L);
         });
     }
 
@@ -65,7 +73,7 @@ class EventUpdateListenerTest {
     void handleEventUpdated_shouldHandleNullMessageGracefully() {
         // Act & Assert
         assertDoesNotThrow(() -> {
-            eventUpdateListener.handleEventUpdated(null);
+            eventUpdateListener.handleEventUpdated(null, channel, 1L);
         });
     }
 
@@ -76,7 +84,7 @@ class EventUpdateListenerTest {
 
         // Act & Assert
         assertDoesNotThrow(() -> {
-            eventUpdateListener.handleEventUpdated(malformedJson);
+            eventUpdateListener.handleEventUpdated(malformedJson, channel, 1L);
         });
     }
 }
