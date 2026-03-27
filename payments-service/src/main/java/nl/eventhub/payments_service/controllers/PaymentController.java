@@ -1,5 +1,6 @@
 package nl.eventhub.payments_service.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import nl.eventhub.payments_service.models.Payment;
 import nl.eventhub.payments_service.services.PaymentService;
@@ -19,6 +20,7 @@ public class PaymentController {
     private PaymentService paymentService;
 
     @PostMapping("/tickets/{ticketId}/init-payment")
+    @Operation(summary = "Initialize payment")
     public ResponseEntity<Payment> initPayment(@PathVariable Long ticketId) {
         return ResponseEntity.ok(paymentService.initPayment(ticketId));
     }

@@ -1,5 +1,6 @@
 package nl.eventhub.users_service.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import nl.eventhub.users_service.dtos.UserCreationDTO;
 import nl.eventhub.users_service.models.User;
@@ -16,11 +17,13 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/registrate")
+    @Operation(summary = "Create a user")
     public ResponseEntity<User> registrate(@RequestBody UserCreationDTO user) {
         return ResponseEntity.ok(userService.registrate(user));
     }
 
     @PostMapping("/login")
+    @Operation(summary = "Log in")
     public ResponseEntity<User> login(@RequestParam String username, @RequestParam String password) {
         return userService.login(username, password)
                 .map(ResponseEntity::ok)
@@ -28,6 +31,7 @@ public class UserController {
     }
 
     @PostMapping("/logout")
+    @Operation(summary = "Log out")
     public ResponseEntity<Void> logout(@RequestParam Long userId) {
         userService.logout(userId);
         return ResponseEntity.ok().build();
