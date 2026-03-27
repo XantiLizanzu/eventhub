@@ -12,7 +12,7 @@ WORKDIR /users-service
 #COPY --from=build /users-service/target/*.jar app.jar
 COPY --from=build /users-service/pom.xml pom.xml
 COPY src src
-EXPOSE 8081
+EXPOSE 8085
 
 # Run using Maven for hot reload support via mounted /users-service/target
 ENTRYPOINT ["mvn", "spring-boot:run"]
