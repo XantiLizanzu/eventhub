@@ -2,13 +2,6 @@
 
 First, rename `.env.template` to `.env` and update in the values if necessary.
 
-## Run a single project
-This is for development purposes only.
-```bash
-cd <project-name>
-./mvnw spring-boot:run
-```
-
 ## Using docker compose 
 To run all services using Docker compose, first build the images:
 ```bash
@@ -22,6 +15,13 @@ docker compose up
 
 For development purposes, hot reload is enabled. When making changes, save the file and build the project (`Ctrl+F9`) again. 
 To make it work with Docker, the `target` folders are added as volumes.
+
+## Run a single project
+This is for development purposes only.
+```bash
+cd <project-name>
+./mvnw spring-boot:run
+```
 
 # Running production
 
