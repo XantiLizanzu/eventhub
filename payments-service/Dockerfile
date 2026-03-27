@@ -1,18 +1,13 @@
-# Stage 1: Build the application
+# Stage 1: Build with Maven
 FROM maven:3.9.6-amazoncorretto-21 AS build
-WORKDIR /payments-service
+WORKDIR /app
 COPY pom.xml .
-RUN mvn dependency:go-offline
-COPY src src
-RUN mvn package -DskipTests
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-# Stage 2: Runtime image
-FROM maven:3.9.6-amazoncorretto-21
-WORKDIR /payments-service
-#COPY --from=build /payments-service/target/*.jar app.jar
-COPY --from=build /payments-service/pom.xml pom.xml
-COPY src src
-EXPOSE 8084
-
-# Run using Maven for hot reload support via mounted /payments-service/target
-ENTRYPOINT ["mvn", "spring-boot:run"]
+# Stage 2: Run with Java (non-root)
+FROM amazoncorretto:21
+WORKDIR /app
+COPY --from=build /app/target/payments-service-*.jar app.jar
+USER 1001
+ENTRYPOINT ["java", "-jar", "app.jar"]

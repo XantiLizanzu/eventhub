@@ -1,18 +1,13 @@
-# Stage 1: Build the application
+# Stage 1: Build with Maven
 FROM maven:3.9.6-amazoncorretto-21 AS build
-WORKDIR /notifications-service
+WORKDIR /app
 COPY pom.xml .
-RUN mvn dependency:go-offline
-COPY src src
-RUN mvn package -DskipTests
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-# Stage 2: Runtime image
-FROM maven:3.9.6-amazoncorretto-21
-WORKDIR /notifications-service
-#COPY --from=build /app/target/*.jar app.jar
-COPY --from=build /notifications-service/pom.xml pom.xml
-COPY src src
-EXPOSE 8082
-
-# Run using Maven for hot reload support via mounted /notifications-service/target
-ENTRYPOINT ["mvn", "spring-boot:run"]
+# Stage 2: Run with Java (non-root)
+FROM amazoncorretto:21
+WORKDIR /app
+COPY --from=build /app/target/notifications-service-*.jar app.jar
+USER 1001
+ENTRYPOINT ["java", "-jar", "app.jar"]
