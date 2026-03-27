@@ -40,6 +40,13 @@ docker compose up
 
 Rename `.env.template` to `.env` and update in the values if necessary.
 
+## SELinux permission issues 
+Label directories as container_file
+`sudo chcon -Rt container_file_t ./*/target`
+
+**# Verify**
+ls -Z ./events-service/target
+
 # IntelliJ development
 
 If you are using IntelliJ, you might need to add the different services as modules. To do so, press `Ctrl+Shift+Alt+S`
