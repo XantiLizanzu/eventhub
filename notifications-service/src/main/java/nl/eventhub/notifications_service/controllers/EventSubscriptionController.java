@@ -1,5 +1,7 @@
 package nl.eventhub.notifications_service.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import nl.eventhub.notifications_service.models.EventSubscription;
 import nl.eventhub.notifications_service.repositories.EventSubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Tag(name = "Event Subscriptions")
 @RequestMapping("/api/subscriptions")
 public class EventSubscriptionController {
 
@@ -14,6 +17,7 @@ public class EventSubscriptionController {
     private EventSubscriptionRepository eventSubscriptionRepository;
 
     @PostMapping("/subscribe")
+    @Operation(summary = "Subscribe to an event", description = "Subscribes a user to receive notifications for a specific event")
     public ResponseEntity<String> subscribeToEvent(@RequestParam Long userId, @RequestParam Long eventId) {
         EventSubscription subscription = new EventSubscription(userId, eventId);
         eventSubscriptionRepository.save(subscription);
@@ -21,6 +25,7 @@ public class EventSubscriptionController {
     }
 
     @PostMapping("/unsubscribe")
+    @Operation(summary = "Unsubscribe from an event", description = "Removes a user's subscription to receive notifications for a specific event")
     public ResponseEntity<String> unsubscribeFromEvent(@RequestParam Long userId, @RequestParam Long eventId) {
         EventSubscription subscription = eventSubscriptionRepository.findByUserIdAndEventId(userId, eventId);
         if (subscription != null) {
