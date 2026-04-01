@@ -1,7 +1,7 @@
 package nl.eventhub.events_service.models;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
