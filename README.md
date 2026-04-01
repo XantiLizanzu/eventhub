@@ -1,9 +1,25 @@
+#Starting cluster
+
+
+`curl -L https://istio.io/downloadIstio | sh -`
+
+`start minikube`
+
+`kubectl create -f Kuber_namespace.yaml`
+
+
+`istio-1.29.1/bin/istioctl install --set profile=ambient --set values.global.platform=minikube`
+
+
+
+
 # Running development
 
 First, rename `.env.template` to `.env` and update in the values if necessary.
 
 ## Using docker compose 
 To run all services using Docker compose, first build the images:
+
 ```bash
 docker compose build
 ```
