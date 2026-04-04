@@ -1,3 +1,4 @@
+
 # Stage 1: Build with Maven
 FROM maven:3.9.6-amazoncorretto-21 AS build
 WORKDIR /app

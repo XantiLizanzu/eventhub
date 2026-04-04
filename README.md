@@ -3,12 +3,21 @@
 
 `curl -L https://istio.io/downloadIstio | sh -`
 
-`start minikube`
+`minikube start --memory=8192mb --cpus=4`
 
 `kubectl create -f Kuber_namespace.yaml`
 
 
 `istio-1.29.1/bin/istioctl install --set profile=ambient --set values.global.platform=minikube`
+
+to let your local docker deamon commincate with the minikube docker deamon:
+`eval $(minikube -p minikube docker-env)`
+
+`docker compose build`
+
+`kubectl create namespace eventhub`
+
+`./deploy-all.sh`
 
 
 

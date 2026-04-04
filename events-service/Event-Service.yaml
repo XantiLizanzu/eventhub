@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: events-service
+  namespace: eventhub
+spec:
+  selector:
+    app: Event_app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

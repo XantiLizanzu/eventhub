@@ -1,26 +1,31 @@
 services:
   events-service:
     build: ./events-service
+    image: events-service:latest
     ports:
       - "${EVENTS_SERVICE_PORT}:${EVENTS_SERVICE_PORT}"
 
   notifications-service:
     build: ./notifications-service
+    image: notifications-service:latest
     ports:
       - "${NOTIFICATIONS_SERVICE_PORT}:${NOTIFICATIONS_SERVICE_PORT}"
 
   ticketing-service:
     build: ./ticketing-service
+    image: ticketing-service:latest
     ports:
       - "${TICKETING_SERVICE_PORT}:${TICKETING_SERVICE_PORT}"
 
   payments-service:
     build: ./payments-service
+    image: payments-service:latest
     ports:
       - "${PAYMENTS_SERVICE_PORT}:${PAYMENTS_SERVICE_PORT}"
 
   users-service:
     build: ./users-service
+    image: users-service:latest
     ports:
       - "${USERS_SERVICE_PORT}:${USERS_SERVICE_PORT}"
 
