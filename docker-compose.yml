@@ -3,11 +3,15 @@ services:
     build: ./events-service
     ports:
       - "${EVENTS_SERVICE_PORT}:${EVENTS_SERVICE_PORT}"
+    depends_on:
+      - rabbitmq
 
   notifications-service:
     build: ./notifications-service
     ports:
       - "${NOTIFICATIONS_SERVICE_PORT}:${NOTIFICATIONS_SERVICE_PORT}"
+    depends_on:
+      - rabbitmq
 
   ticketing-service:
     build: ./ticketing-service
