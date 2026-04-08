@@ -1,8 +1,10 @@
 package nl.eventhub.events_service.controllers;
 
 import nl.eventhub.events_service.dtos.EventCreationDTO;
+import nl.eventhub.events_service.dtos.EventResponseDTO;
 import nl.eventhub.events_service.models.Event;
 import nl.eventhub.events_service.services.EventService;
+import nl.eventhub.events_service.services.TicketClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,6 +29,9 @@ class EventControllerTest {
     @Mock
     private EventService eventService;
 
+    @Mock
+    private TicketClient ticketClient;
+
     @InjectMocks
     private EventController eventController;
 
@@ -45,9 +50,10 @@ class EventControllerTest {
         // Arrange
         Event event2 = new Event("Event 2", "Description 2", LocalDateTime.now(), "Location 2", 5);
         when(eventService.getAllEvents()).thenReturn(Arrays.asList(testEvent, event2));
+        when(ticketClient.getAvailableTickets(anyLong(), anyInt())).thenReturn(5);
 
         // Act
-        List<Event> result = eventController.getAllEvents();
+        List<EventResponseDTO> result = eventController.getAllEvents();
 
         // Assert
         assertEquals(2, result.size());
@@ -58,13 +64,14 @@ class EventControllerTest {
     void getEventById_shouldReturnEventWhenFound() {
         // Arrange
         when(eventService.getEventById(anyLong())).thenReturn(Optional.of(testEvent));
+        when(ticketClient.getAvailableTickets(anyLong(), anyInt())).thenReturn(5);
 
         // Act
-        ResponseEntity<Event> result = eventController.getEventById(1L);
+        ResponseEntity<EventResponseDTO> result = eventController.getEventById(1L);
 
         // Assert
         assertTrue(result.getStatusCode().is2xxSuccessful());
-        assertEquals(testEvent, result.getBody());
+        assertEquals(testEvent.getId(), result.getBody().getId());
         verify(eventService, times(1)).getEventById(1L);
     }
 
@@ -74,7 +81,7 @@ class EventControllerTest {
         when(eventService.getEventById(anyLong())).thenReturn(Optional.empty());
 
         // Act
-        ResponseEntity<Event> result = eventController.getEventById(1L);
+        ResponseEntity<EventResponseDTO> result = eventController.getEventById(1L);
 
         // Assert
         assertTrue(result.getStatusCode().is4xxClientError());

@@ -20,14 +20,19 @@ public class TicketClient {
         this.restTemplate = restTemplate;
     }
 
-    public int getAvailableTickets(Long eventId) {
+    public int getBookedTickets(Long eventId) {
         try {
             String url = ticketingServiceUrl + "ticketing/availability/" + eventId;
             ResponseEntity<Integer> response = restTemplate.getForEntity(url, Integer.class);
             return response.getBody();
         } catch (Exception e) {
-            System.err.println("Failed to fetch tickets: " + e.getMessage());
+            System.err.println("Failed to fetch booked tickets: " + e.getMessage());
             return 0;
         }
+    }
+
+    public int getAvailableTickets(Long eventId, int totalTicketCount) {
+        int bookedTickets = getBookedTickets(eventId);
+        return Math.max(totalTicketCount - bookedTickets, 0);
     }
 }

@@ -3,6 +3,7 @@ package nl.eventhub.events_service.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import nl.eventhub.events_service.dtos.EventCreationDTO;
+import nl.eventhub.events_service.dtos.EventResponseDTO;
 import nl.eventhub.events_service.models.Event;
 import nl.eventhub.events_service.services.EventService;
 import nl.eventhub.events_service.services.TicketClient;
@@ -28,21 +29,30 @@ public class EventController {
 
     @GetMapping
     @Operation(summary = "Get all events", description = "Retrieves a list of all available events")
-    public List<Event> getAllEvents() {
-        return eventService.getAllEvents();
+    public List<EventResponseDTO> getAllEvents() {
+        List<Event> events = eventService.getAllEvents();
+        return events.stream()
+                .map(event -> new EventResponseDTO(event, ticketClient.getAvailableTickets(event.getId(), event.getTotalTicketCount())))
+                .toList();
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get an event")
-    public ResponseEntity<Event> getEventById(@PathVariable Long id) {
+    public ResponseEntity<EventResponseDTO> getEventById(@PathVariable Long id) {
         Optional<Event> event = eventService.getEventById(id);
-        return event.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return event.map(e -> ResponseEntity.ok(new EventResponseDTO(e, ticketClient.getAvailableTickets(e.getId(), e.getTotalTicketCount()))))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/{eventId}/availability")
-    @Operation(summary="Get the amount of available tickets")
+    @Operation(summary="Get the number of available tickets")
     public ResponseEntity<Map<String, Object>> getEventAvailability(@PathVariable Long eventId){
-        int availableTickets = ticketClient.getAvailableTickets(eventId);
+        Optional<Event> event = eventService.getEventById(eventId);
+        if (event.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        int availableTickets = ticketClient.getAvailableTickets(eventId, event.get().getTotalTicketCount());
         Map<String, Object> response = new HashMap<>();
         response.put("eventId", eventId);
         response.put("availableTickets", availableTickets);
