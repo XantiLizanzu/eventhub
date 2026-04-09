@@ -5,31 +5,23 @@ import nl.eventhub.payments_service.repositories.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.CompletableFuture;
-
 @Service
 public class PaymentService {
 
     @Autowired
+    private TicketingClient ticketingClient;
+
+    @Autowired
     private PaymentRepository paymentRepository;
 
+    @Autowired
+    private PaymentMessageSender paymentMessageSender;
+
     public Payment initPayment(Long ticketId) {
-        Payment payment = new Payment(ticketId, PaymentStatus.INITIATED, 1000); // Dummy amount 1000 cents
-        payment = paymentRepository.save(payment);
-
-        final Long paymentId = payment.getId();
-        CompletableFuture.runAsync(() -> {
-            try {
-                Thread.sleep(5000); // wait 5 seconds
-                paymentRepository.findById(paymentId).ifPresent(p -> {
-                    p.setStatus(PaymentStatus.SUCCESSFUL);
-                    paymentRepository.save(p);
-                });
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        });
-
-        return payment;
+        Payment payment = new Payment(ticketId, PaymentStatus.SUCCESSFUL, 1000); // Dummy amount 1000 cents
+        Payment newPayment = paymentRepository.save(payment);
+        ticketingClient.completeTicket(newPayment.getTicketId());
+        paymentMessageSender.sendPaymentSucceededQueueName(newPayment);
+        return newPayment;
     }
 }

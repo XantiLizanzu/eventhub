@@ -22,6 +22,7 @@ public class PaymentController {
     @PostMapping("/tickets/{ticketId}/init-payment")
     @Operation(summary = "Initialize payment")
     public ResponseEntity<Payment> initPayment(@PathVariable Long ticketId) {
+        System.out.println("Init payment");
         return ResponseEntity.ok(paymentService.initPayment(ticketId));
     }
 }

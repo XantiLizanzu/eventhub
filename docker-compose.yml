@@ -22,6 +22,8 @@ services:
     build: ./payments-service
     ports:
       - "${PAYMENTS_SERVICE_PORT}:${PAYMENTS_SERVICE_PORT}"
+    depends_on:
+      - rabbitmq
 
   users-service:
     build: ./users-service
