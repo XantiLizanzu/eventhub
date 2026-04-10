@@ -8,14 +8,14 @@ spec: #spec of deployment
   replicas: 3 #amount of replicas
   selector: #defines which app to use
     matchLabels:
-      app: notification_app #defines the labelselector used by the deployer to identify and manage this deployment
+      app: notification-app #defines the labelselector used by the deployer to identify and manage this deployment
   template:
     metadata:
       labels:
-        app: notification_app # Applies the label to the pods created by this Deployment.
+        app: notification-app # Applies the label to the pods created by this Deployment.
     spec: #defines the pods
       containers: # a pod and its configurations
-        - name: notification-bsackend #name
+        - name: notification-backend #name
           image: notifications-service:latest #image
           imagePullPolicy: Never
           ports:

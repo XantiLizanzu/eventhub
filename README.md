@@ -1,4 +1,4 @@
-#Starting cluster
+# Starting cluster
 
 
 `curl -L https://istio.io/downloadIstio | sh -`
