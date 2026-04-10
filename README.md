@@ -51,3 +51,76 @@ ls -Z ./events-service/target
 
 If you are using IntelliJ, you might need to add the different services as modules. To do so, press `Ctrl+Shift+Alt+S`
 to the project structure dialog. Then go to `Modules > + > Import Module` and import every service as a Maven project.
+
+# Running on Kubernetes
+
+## Prerequisites
+- Install [Minikube](https://minikube.sigs.k8s.io/docs/start/) or another Kubernetes cluster.
+- Install [kubectl](https://kubernetes.io/docs/tasks/tools/).
+- Install [Istio](https://istio.io/latest/docs/setup/getting-started/).
+
+## Steps to Set Up the Cluster
+
+1. **Start Minikube**:
+   ```bash
+   minikube start
+   ```
+
+2. **Enable Istio in Minikube**:
+   ```bash
+   minikube addons enable istio
+   minikube addons enable istio-provisioner
+   ```
+
+3. **Build Docker Images**:
+   ```bash
+   docker compose build
+   ```
+
+4. **Load Images into Minikube**:
+   ```bash
+   minikube image load events-service:latest
+   minikube image load notifications-service:latest
+   minikube image load ticketing-service:latest
+   minikube image load payments-service:latest
+   minikube image load users-service:latest
+   ```
+
+5. **Apply Kubernetes Deployments**:
+   ```bash
+   kubectl apply -f kubernetes/
+   ```
+
+6. **Apply Istio Gateway**:
+   ```bash
+   kubectl apply -f kubernetes/istio-gateway.yaml
+   ```
+
+7. **Access Services**:
+   - Get the Minikube IP:
+     ```bash
+     minikube ip
+     ```
+   - Access the services using the Minikube IP and the appropriate ports as defined in the Istio Gateway.
+
+## Verifying the Setup
+
+- Check the status of the pods:
+  ```bash
+  kubectl get pods
+  ```
+
+- Check the status of the services:
+  ```bash
+  kubectl get services
+  ```
+
+- Check the Istio Gateway:
+  ```bash
+  kubectl get gateway
+  ```
+
+- Check the VirtualService:
+  ```bash
+  kubectl get virtualservice
+  ```
