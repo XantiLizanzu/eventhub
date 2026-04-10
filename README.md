@@ -58,6 +58,7 @@ to the project structure dialog. Then go to `Modules > + > Import Module` and im
 - Install [Minikube](https://minikube.sigs.k8s.io/docs/start/) or another Kubernetes cluster.
 - Install [kubectl](https://kubernetes.io/docs/tasks/tools/).
 - Install [Istio](https://istio.io/latest/docs/setup/getting-started/).
+- Install [Helm](https://helm.sh/docs/intro/install/) for Kiali installation.
 
 ## Steps to Set Up the Cluster
 
@@ -96,7 +97,14 @@ to the project structure dialog. Then go to `Modules > + > Import Module` and im
    kubectl apply -f kubernetes/istio-gateway.yaml
    ```
 
-7. **Access Services**:
+7. **Install Kiali (Optional but recommended)**:
+   ```bash
+   helm repo add kiali https://kiali.org/helm-charts
+   helm repo update
+   helm install kiali kiali/kiali-server --namespace istio-system --set auth.strategy=anonymous
+   ```
+
+8. **Access Services**:
    - Get the Minikube IP:
      ```bash
      minikube ip
@@ -124,3 +132,31 @@ to the project structure dialog. Then go to `Modules > + > Import Module` and im
   ```bash
   kubectl get virtualservice
   ```
+
+## Accessing Kiali Dashboard
+
+Kiali has been installed to visualize your Istio service mesh. To access it:
+
+1. **Port-forward Kiali service**:
+   ```bash
+   kubectl port-forward svc/kiali 20001:20001 -n istio-system
+   ```
+
+2. **Access Kiali in your browser**:
+   Open [http://localhost:20001](http://localhost:20001) in your web browser.
+
+3. **Explore your service mesh**:
+   - View the graph of your services and their connections
+   - Check metrics and health of your services
+   - Monitor traffic flow between microservices
+   - Troubleshoot issues in your mesh
+
+## Kiali Features for First-Time Users
+
+- **Graph View**: Visual representation of your service mesh topology
+- **Service Details**: Metrics, health, and configuration for each service
+- **Workloads**: Individual pod-level metrics and details
+- **Istio Config**: View and validate your Istio configuration objects
+- **Traffic Management**: Understand how traffic flows through your mesh
+
+To stop the port-forwarding, press `Ctrl+C` in your terminal.
