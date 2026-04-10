@@ -23,6 +23,8 @@ spec:
         env:
         - name: USERS_SERVICE_PORT
           value: "8085"
+        - name: SERVER_SERVLET_CONTEXT_PATH
+          value: "/users"
 ---
 apiVersion: v1
 kind: Service

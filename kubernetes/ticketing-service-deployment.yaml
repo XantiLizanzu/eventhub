@@ -23,6 +23,8 @@ spec:
         env:
         - name: TICKETING_SERVICE_PORT
           value: "8083"
+        - name: SERVER_SERVLET_CONTEXT_PATH
+          value: "/ticketing"
 ---
 apiVersion: v1
 kind: Service

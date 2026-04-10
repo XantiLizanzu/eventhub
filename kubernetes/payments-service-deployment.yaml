@@ -31,6 +31,8 @@ spec:
           value: "guest"
         - name: RABBITMQ_PASS
           value: "guest"
+        - name: SERVER_SERVLET_CONTEXT_PATH
+          value: "/payments"
 ---
 apiVersion: v1
 kind: Service
