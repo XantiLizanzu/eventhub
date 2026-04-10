@@ -25,9 +25,9 @@ spec:
   http:
   - match:
     - uri:
-        prefix: /events/
+        prefix: /events
     rewrite:
-      uri: /
+      uri: /events
     route:
     - destination:
         host: events-service
@@ -35,9 +35,9 @@ spec:
           number: 8081
   - match:
     - uri:
-        prefix: /notifications/
+        prefix: /notifications
     rewrite:
-      uri: /
+      uri: /notifications
     route:
     - destination:
         host: notifications-service
@@ -45,9 +45,9 @@ spec:
           number: 8082
   - match:
     - uri:
-        prefix: /ticketing/
+        prefix: /ticketing
     rewrite:
-      uri: /
+      uri: /ticketing
     route:
     - destination:
         host: ticketing-service
@@ -55,9 +55,9 @@ spec:
           number: 8083
   - match:
     - uri:
-        prefix: /payments/
+        prefix: /payments
     rewrite:
-      uri: /
+      uri: /payments
     route:
     - destination:
         host: payments-service
@@ -65,9 +65,9 @@ spec:
           number: 8084
   - match:
     - uri:
-        prefix: /users/
+        prefix: /users
     rewrite:
-      uri: /
+      uri: /users
     route:
     - destination:
         host: users-service
