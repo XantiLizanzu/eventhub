@@ -4,12 +4,16 @@ services:
     image: events-service:latest
     ports:
       - "${EVENTS_SERVICE_PORT}:${EVENTS_SERVICE_PORT}"
+    depends_on:
+      - rabbitmq
 
   notifications-service:
     build: ./notifications-service
     image: notifications-service:latest
     ports:
       - "${NOTIFICATIONS_SERVICE_PORT}:${NOTIFICATIONS_SERVICE_PORT}"
+    depends_on:
+      - rabbitmq
 
   ticketing-service:
     build: ./ticketing-service
@@ -22,6 +26,8 @@ services:
     image: payments-service:latest
     ports:
       - "${PAYMENTS_SERVICE_PORT}:${PAYMENTS_SERVICE_PORT}"
+    depends_on:
+      - rabbitmq
 
   users-service:
     build: ./users-service

@@ -1,10 +1,12 @@
 
 package nl.eventhub.ticketing_service.services;
 
+import jakarta.annotation.PostConstruct;
 import nl.eventhub.ticketing_service.models.Ticket;
 import nl.eventhub.ticketing_service.models.TicketStatus;
 import nl.eventhub.ticketing_service.repositories.TicketingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,13 +19,31 @@ public class TicketingService {
     private final TicketingRepository ticketingRepository;
 
     @Autowired
+    private PaymentClient paymentClient;
+
+    @Autowired
     public TicketingService(TicketingRepository ticketingRepository) {
         this.ticketingRepository = ticketingRepository;
     }
 
+    @PostConstruct
+    public void initializeSampleEvents() {
+
+        if (ticketingRepository.count() == 0) {
+            ticketingRepository.saveAll(List.of(
+                            new Ticket(1L, 1,
+                                    LocalDateTime.of(2026, 4, 8, 17, 0),
+                                    TicketStatus.COMPLETED)
+                    )
+            );
+        }
+    }
+
     public Ticket reserveTicket(long eventId, long userId) {
         Ticket ticket = new Ticket(userId, eventId, LocalDateTime.now(), TicketStatus.RESERVED);
-        return ticketingRepository.save(ticket);
+        Ticket newTicket = ticketingRepository.save(ticket);
+        paymentClient.pay(newTicket.getId());
+        return newTicket;
     }
 
     public Optional<Ticket> unreserveTicket(long ticketId) {
@@ -53,5 +73,18 @@ public class TicketingService {
 
     public List<Ticket> getTicketsForUser(long userId) {
         return ticketingRepository.findByUserId(userId);
+    }
+
+    @Scheduled(fixedRate = 5000)
+    public void cleanupExpiredReservations() {
+        List<Ticket> expiredTickets = ticketingRepository.findAll().stream()
+                .filter(ticket -> ticket.getStatus() == TicketStatus.RESERVED)
+                .filter(ticket -> LocalDateTime.now().isAfter(ticket.getReservedAt().plusSeconds(15)))
+                .toList();
+
+        for (Ticket ticket : expiredTickets) {
+            ticket.setStatus(TicketStatus.UNRESERVED);
+            ticketingRepository.save(ticket);
+        }
     }
 }

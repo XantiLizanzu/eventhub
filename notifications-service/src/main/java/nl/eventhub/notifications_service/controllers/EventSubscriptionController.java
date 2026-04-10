@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import nl.eventhub.notifications_service.models.EventSubscription;
 import nl.eventhub.notifications_service.repositories.EventSubscriptionRepository;
+import nl.eventhub.notifications_service.services.EventClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +17,17 @@ public class EventSubscriptionController {
     @Autowired
     private EventSubscriptionRepository eventSubscriptionRepository;
 
+    @Autowired
+    private EventClient eventClient;
+
     @PostMapping("/subscribe")
     @Operation(summary = "Subscribe to an event", description = "Subscribes a user to receive notifications for a specific event")
     public ResponseEntity<String> subscribeToEvent(@RequestParam Long userId, @RequestParam Long eventId) {
+        // Check if event exists before subscribing
+        if (!eventClient.eventExists(eventId)) {
+            return ResponseEntity.badRequest().body("Event with ID " + eventId + " does not exist");
+        }
+        
         EventSubscription subscription = new EventSubscription(userId, eventId);
         eventSubscriptionRepository.save(subscription);
         return ResponseEntity.ok("Successfully subscribed to event " + eventId);

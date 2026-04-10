@@ -25,7 +25,8 @@ public class TicketingController {
     @PostMapping("/events/{eventId}/reserve")
     @Operation(summary = "Reserve a ticket")
     public ResponseEntity<Ticket> reserveTicket(@PathVariable long eventId, @RequestParam long userId) {
-        return ResponseEntity.ok(ticketingService.reserveTicket(eventId, userId));
+        Ticket ticket = ticketingService.reserveTicket(eventId, userId);
+        return ResponseEntity.ok(ticket);
     }
 
     @PostMapping("/tickets/{ticketId}/unreserve")
@@ -39,6 +40,7 @@ public class TicketingController {
     @PostMapping("/tickets/{ticketId}/complete")
     @Operation(summary = "Complete the reservation of a ticket")
     public ResponseEntity<Ticket> completeTicket(@PathVariable long ticketId) {
+        System.out.println("Complete ticket");
         return ticketingService.completeTicket(ticketId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
