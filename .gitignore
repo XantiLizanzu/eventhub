@@ -64,6 +64,9 @@ __pycache__/
 *.db
 *.sqlite
 
+# Istio
+istio-*
+
 # OS generated files
 *.swp
 *.swo
