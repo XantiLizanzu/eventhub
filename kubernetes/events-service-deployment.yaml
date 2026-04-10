@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: events-service
+  labels:
+    app: events-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: events-service
+  template:
+    metadata:
+      labels:
+        app: events-service
+    spec:
+      containers:
+      - name: events-service
+        image: events-service:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8081
+        env:
+        - name: EVENTS_SERVICE_PORT
+          value: "8081"
+        - name: RABBITMQ_HOST
+          value: "rabbitmq"
+        - name: RABBITMQ_PORT
+          value: "5672"
+        - name: RABBITMQ_USER
+          value: "guest"
+        - name: RABBITMQ_PASS
+          value: "guest"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: events-service
+  labels:
+    app: events-service
+spec:
+  selector:
+    app: events-service
+  ports:
+  - name: http
+    port: 8081
+    targetPort: 8081

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-service
+  labels:
+    app: users-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users-service
+  template:
+    metadata:
+      labels:
+        app: users-service
+    spec:
+      containers:
+      - name: users-service
+        image: users-service:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8085
+        env:
+        - name: USERS_SERVICE_PORT
+          value: "8085"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: users-service
+  labels:
+    app: users-service
+spec:
+  selector:
+    app: users-service
+  ports:
+  - name: http
+    port: 8085
+    targetPort: 8085

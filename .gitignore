@@ -65,7 +65,7 @@ __pycache__/
 *.sqlite
 
 # Istio
-istio-*
+/istio-*
 
 # OS generated files
 *.swp

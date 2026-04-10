@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments-service
+  labels:
+    app: payments-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payments-service
+  template:
+    metadata:
+      labels:
+        app: payments-service
+    spec:
+      containers:
+      - name: payments-service
+        image: payments-service:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8084
+        env:
+        - name: PAYMENTS_SERVICE_PORT
+          value: "8084"
+        - name: RABBITMQ_HOST
+          value: "rabbitmq"
+        - name: RABBITMQ_PORT
+          value: "5672"
+        - name: RABBITMQ_USER
+          value: "guest"
+        - name: RABBITMQ_PASS
+          value: "guest"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payments-service
+  labels:
+    app: payments-service
+spec:
+  selector:
+    app: payments-service
+  ports:
+  - name: http
+    port: 8084
+    targetPort: 8084

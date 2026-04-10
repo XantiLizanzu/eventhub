@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ticketing-service
+  labels:
+    app: ticketing-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ticketing-service
+  template:
+    metadata:
+      labels:
+        app: ticketing-service
+    spec:
+      containers:
+      - name: ticketing-service
+        image: ticketing-service:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8083
+        env:
+        - name: TICKETING_SERVICE_PORT
+          value: "8083"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ticketing-service
+  labels:
+    app: ticketing-service
+spec:
+  selector:
+    app: ticketing-service
+  ports:
+  - name: http
+    port: 8083
+    targetPort: 8083
