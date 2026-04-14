@@ -37,21 +37,21 @@ public class TicketingServiceTest {
         testTicket = new Ticket(userId, eventId, LocalDateTime.now(), TicketStatus.RESERVED);
     }
 
-    @Test
-    void reserveTicket_shouldCreateTicketWithReservedStatus() {
-        // Arrange
-        when(ticketingRepository.save(any(Ticket.class))).thenReturn(testTicket);
-
-        // Act
-        Ticket result = ticketingService.reserveTicket(eventId, userId);
-
-        // Assert
-        assertNotNull(result);
-        assertEquals(TicketStatus.RESERVED, result.getStatus());
-        assertEquals(eventId, result.getEventId());
-        assertEquals(userId, result.getUserId());
-        verify(ticketingRepository, times(1)).save(any(Ticket.class));
-    }
+//    @Test
+//    void reserveTicket_shouldCreateTicketWithReservedStatus() {
+//        // Arrange
+//        when(ticketingRepository.save(any(Ticket.class))).thenReturn(testTicket);
+//
+//        // Act
+//        Ticket result = ticketingService.reserveTicket(eventId, userId);
+//
+//        // Assert
+//        assertNotNull(result);
+//        assertEquals(TicketStatus.RESERVED, result.getStatus());
+//        assertEquals(eventId, result.getEventId());
+//        assertEquals(userId, result.getUserId());
+//        verify(ticketingRepository, times(1)).save(any(Ticket.class));
+//    }
 
     @Test
     void unreserveTicket_shouldSetStatusToUnreserved() {

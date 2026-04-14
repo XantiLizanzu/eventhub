@@ -25,8 +25,9 @@ public class TicketingController {
     @PostMapping("/events/{eventId}/reserve")
     @Operation(summary = "Reserve a ticket")
     public ResponseEntity<Ticket> reserveTicket(@PathVariable long eventId, @RequestParam long userId) {
-        Ticket ticket = ticketingService.reserveTicket(eventId, userId);
-        return ResponseEntity.ok(ticket);
+        return ticketingService.reserveTicket(eventId, userId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/tickets/{ticketId}/unreserve")
