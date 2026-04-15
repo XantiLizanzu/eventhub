@@ -27,8 +27,13 @@ public class TicketingService {
     private EventClient eventClient;
 
     @Autowired
-    public TicketingService(TicketingRepository ticketingRepository) {
+    public TicketingService(
+            TicketingRepository ticketingRepository,
+            PaymentClient paymentClient,
+            EventClient eventClient) {
         this.ticketingRepository = ticketingRepository;
+        this.paymentClient = paymentClient;
+        this.eventClient = eventClient;
     }
 
     @PostConstruct

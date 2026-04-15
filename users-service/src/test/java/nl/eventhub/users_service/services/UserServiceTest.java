@@ -72,6 +72,5 @@ public class UserServiceTest {
     @Test
     void logout_shouldDoNothing() {
         userService.logout(1L);
-        // Just verify no exception
     }
 }
