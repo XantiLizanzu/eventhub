@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @Tag(name = "Event Subscriptions")
 @RequestMapping("/api/subscriptions")
@@ -43,5 +46,15 @@ public class EventSubscriptionController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/event/{eventId}/subscribers")
+    @Operation(summary = "Get all subscribers for an event", description = "Returns a list of user IDs subscribed to the specified event")
+    public ResponseEntity<List<Long>> getSubscribersForEvent(@PathVariable Long eventId) {
+        List<EventSubscription> subscriptions = eventSubscriptionRepository.findByEventId(eventId);
+        List<Long> userIds = subscriptions.stream()
+                .map(EventSubscription::getUserId)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(userIds);
     }
 }
