@@ -37,7 +37,10 @@ public class EventService {
                     new Event("Pandora", "Pandora is a week-long puzzle hunt on the Campus of the " +
                             "University of Twente. Be careful for other players, because you don't want to be killed!",
                             LocalDateTime.of(2026, 4, 20, 19, 0),
-                            "Campus University of Twente", 300)
+                            "Campus University of Twente", 300),
+                    new Event("Free event", "It's free!",
+                            LocalDateTime.of(2026, 4, 22, 19, 0),
+                            "Free location", 0)
                 )
             );
         }
