@@ -24,4 +24,16 @@ spec: #spec of deployment
             - configMapRef:
                 name: service-ports
 
-
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payments-service
+  namespace: eventhub
+spec:
+  selector:
+    app: payments-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

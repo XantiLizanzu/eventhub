@@ -25,3 +25,16 @@ spec: #spec of deployment
                 name: service-ports
 
 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ticketing-service
+  namespace: eventhub
+spec:
+  selector:
+    app: ticketing_app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

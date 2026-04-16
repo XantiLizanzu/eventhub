@@ -34,6 +34,8 @@ spec:
   - match:
     - uri:
         prefix: /notifications
+    - uri:
+        prefix: /notifications/
     route:
     - destination:
         host: notifications-service.eventhub.svc.cluster.local
@@ -54,6 +56,8 @@ spec:
   - match:
     - uri:
         prefix: /users
+    - uri:
+        prefix: /users/
     route:
     - destination:
         host: users-service.eventhub.svc.cluster.local
@@ -74,6 +78,8 @@ spec:
   - match:
     - uri:
         prefix: /ticketing
+    - uri:
+        prefix: /ticketing/
     route:
     - destination:
         host: ticketing-service.eventhub.svc.cluster.local
@@ -94,6 +100,8 @@ spec:
   - match:
     - uri:
         prefix: /payments
+    - uri:
+        prefix: /payments/
     route:
     - destination:
         host: payments-service.eventhub.svc.cluster.local
