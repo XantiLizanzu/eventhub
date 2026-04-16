@@ -53,11 +53,21 @@ spec:
     - eventhub-gateway
   http:
     - match:
+          - uri:
+              prefix: /events/swagger-ui.html
+      route:
+        - destination:
+            host: events-service  # Routes to this service
+            port:
+              number: 8080
+
+
+    - match:
         - uri:
             prefix: /events
       route:
         - destination:
-            host: event-app  # Routes to this service
+            host: events-service  # Routes to this service
             port:
               number: 8080
 
