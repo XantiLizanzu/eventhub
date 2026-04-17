@@ -2,8 +2,6 @@
 
 # Apply all Kubernetes resources for the SeOA Project
 
-echo "Applying ConfigMap..."
-kubectl apply -f ./configmap.yaml -n eventhub
 
 echo "Deploying events-service..."
 kubectl apply -f ./events-service/ -n eventhub

@@ -12,7 +12,7 @@ spec: #spec of deployment
   template:
     metadata:
       labels:
-        app: Event_app # Applies the label to the pods created by this Deployment.
+        app: event-app # Applies the label to the pods created by this Deployment.
     spec: #defines the pods
       containers: # a pod and its configurations
         - name: event-backend #name
@@ -34,7 +34,7 @@ metadata:
   namespace: eventhub
 spec:
   selector:
-    app: Event_app
+    app: event-app
   ports:
     - protocol: TCP
       port: 8080

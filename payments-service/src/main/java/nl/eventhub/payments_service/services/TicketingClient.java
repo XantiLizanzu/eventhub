@@ -17,7 +17,7 @@ public class TicketingClient {
     }
 
     public void completeTicket(Long ticketId) {
-        String url = ticketingServiceUrl + "ticketing/tickets/" + ticketId + "/complete";
+        String url = ticketingServiceUrl + "tickets/" + ticketId + "/complete";
         restTemplate.postForEntity(url, null, Ticket.class);
     }
 }

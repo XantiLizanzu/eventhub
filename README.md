@@ -7,22 +7,24 @@
 
 `kubectl create -f Kuber_namespace.yaml`
 
-```kubectl apply -f configmap.yaml```
+```kubectl apply -f Namespace_config.yaml```
 
 ```kubectl label namespace eventhub istio-injection=enabled```
 
-`istio-1.29.1/bin/istioctl install --set profile=ambient --set values.global.platform=minikube`
+`istio-1.29.1/bin/istioctl install --set values.global.platform=minikube`
+
+`kubectl apply -f istio-gateway.yaml`
+
+
 
 to let your local docker deamon commincate with the minikube docker deamon:
 `eval $(minikube -p minikube docker-env)`
 
 `docker compose build`
 
-`kubectl create namespace eventhub`
-
 `./deploy-all.sh`
 
-
+kubectl port-forward -n istio-system svc/istio-ingressgateway 8080:80
 
 
 # Running development
