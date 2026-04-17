@@ -5,7 +5,7 @@ metadata:
   name: ticketing-app #name of deployment
   namespace: eventhub
 spec: #spec of deployment
-  replicas: 3 #amount of replicas
+  replicas: 1 #amount of replicas
   selector: #defines which app to use
     matchLabels:
       app: ticketing_app #defines the labelselector used by the deployer to identify and manage this deployment

@@ -38,35 +38,6 @@ spec:
       port: 8080
       targetPort: 8080
 
----
-apiVersion: networking.istio.io/v1
-kind: VirtualService
-metadata:
-  name: event-route
-  namespace: eventhub
-spec:
-  hosts:
-    - "*"
-  gateways:
-    - eventhub-gateway
-  http:
-    - match:
-        - uri:
-            prefix: /payments/swagger-ui.html
-      route:
-        - destination:
-            host: payments-service  # Routes to this service
-            port:
-              number: 8080
 
-
-    - match:
-        - uri:
-            prefix: /payments
-      route:
-        - destination:
-            host: payments-service  # Routes to this service
-            port:
-              number: 8080
 
 

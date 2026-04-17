@@ -7,6 +7,9 @@
 
 `kubectl create -f Kuber_namespace.yaml`
 
+```kubectl apply -f configmap.yaml```
+
+```kubectl label namespace eventhub istio-injection=enabled```
 
 `istio-1.29.1/bin/istioctl install --set profile=ambient --set values.global.platform=minikube`
 

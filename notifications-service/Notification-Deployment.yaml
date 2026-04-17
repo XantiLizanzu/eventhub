@@ -5,7 +5,7 @@ metadata:
   name: notification-app #name of deployment
   namespace: eventhub
 spec: #spec of deployment
-  replicas: 3 #amount of replicas
+  replicas: 1 #amount of replicas
   selector: #defines which app to use
     matchLabels:
       app: notification-app #defines the labelselector used by the deployer to identify and manage this deployment
@@ -32,7 +32,7 @@ metadata:
   namespace: eventhub
 spec:
   selector:
-    app: notification_app
+    app: notification-app
   ports:
     - protocol: TCP
       port: 8080
