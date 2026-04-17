@@ -8,7 +8,7 @@ spec: #spec of deployment
   replicas: 3 #amount of replicas
   selector: #defines which app to use
     matchLabels:
-      app: Event_app #defines the labelselector used by the deployer to identify and manage this deployment
+      app: event-app #defines the labelselector used by the deployer to identify and manage this deployment
   template:
     metadata:
       labels:
