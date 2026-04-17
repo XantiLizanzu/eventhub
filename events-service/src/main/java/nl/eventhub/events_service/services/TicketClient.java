@@ -22,7 +22,7 @@ public class TicketClient {
 
     public int getBookedTickets(Long eventId) {
         try {
-            String url = ticketingServiceUrl + "availability/" + eventId;
+            String url = ticketingServiceUrl + "ticketing/availability/" + eventId;
             ResponseEntity<Integer> response = restTemplate.getForEntity(url, Integer.class);
             return response.getBody();
         } catch (Exception e) {

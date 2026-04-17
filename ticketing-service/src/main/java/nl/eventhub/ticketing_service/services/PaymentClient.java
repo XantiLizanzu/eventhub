@@ -19,7 +19,7 @@ public class PaymentClient {
     }
 
     public void pay(Long ticketId) {
-        String url = paymentServiceUrl + "tickets/" + ticketId + "/init-payment";
+        String url = paymentServiceUrl + "payments/tickets/" + ticketId + "/init-payment";
         restTemplate.postForEntity(url, null, Payment.class);
     }
 }

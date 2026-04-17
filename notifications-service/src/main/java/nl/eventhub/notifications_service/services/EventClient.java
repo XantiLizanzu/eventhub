@@ -20,7 +20,7 @@ public class EventClient {
 
     public boolean eventExists(Long eventId) {
         try {
-            String url = eventsServiceUrl + "/" + eventId;
+            String url = eventsServiceUrl + "/events/" + eventId;
             Event event = restTemplate.getForObject(url, Event.class);
             return event != null;
         } catch (Exception e) {

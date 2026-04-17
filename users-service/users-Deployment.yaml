@@ -8,11 +8,11 @@ spec: #spec of deployment
   replicas: 1 #amount of replicas
   selector: #defines which app to use
     matchLabels:
-      app: users_app #defines the labelselector used by the deployer to identify and manage this deployment
+      app: users-app #defines the labelselector used by the deployer to identify and manage this deployment
   template:
     metadata:
       labels:
-        app: users_app # Applies the label to the pods created by this Deployment.
+        app: users-app # Applies the label to the pods created by this Deployment.
     spec: #defines the pods
       containers: # a pod and its configurations
         - name: users-backend #name
@@ -31,7 +31,7 @@ metadata:
   namespace: eventhub
 spec:
   selector:
-    app: users_app
+    app: users-app
   ports:
     - protocol: TCP
       port: 8080
