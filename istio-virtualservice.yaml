@@ -1,0 +1,130 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: event-route
+  namespace: eventhub
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - eventhub-gateway
+  http:
+    # Events service - all paths
+    - match:
+        - uri:
+            prefix: /events
+      route:
+        - destination:
+            host: events-service
+            port:
+              number: 8080
+    # Events service OpenAPI
+    - match:
+        - uri:
+            prefix: /events/v3/api-docs
+      route:
+        - destination:
+            host: events-service
+            port:
+              number: 8080
+
+    # Notifications service - all paths
+    - match:
+        - uri:
+            prefix: /notifications
+      route:
+        - destination:
+            host: notifications-service
+            port:
+              number: 8080
+    # Notifications service OpenAPI
+    - match:
+        - uri:
+            prefix: /notifications/v3/api-docs
+      route:
+        - destination:
+            host: notifications-service
+            port:
+              number: 8080
+
+    # Users service - all paths
+    - match:
+        - uri:
+            prefix: /users
+      route:
+        - destination:
+            host: users-service
+            port:
+              number: 8080
+    # Users service OpenAPI
+    - match:
+        - uri:
+            prefix: /users/v3/api-docs
+      route:
+        - destination:
+            host: users-service
+            port:
+              number: 8080
+
+    # Ticketing service - all paths
+    - match:
+        - uri:
+            prefix: /ticketing
+      route:
+        - destination:
+            host: ticketing-service
+            port:
+              number: 8080
+    # Ticketing service OpenAPI
+    - match:
+        - uri:
+            prefix: /ticketing/v3/api-docs
+      route:
+        - destination:
+            host: ticketing-service
+            port:
+              number: 8080
+
+    # Payments service - all paths
+    - match:
+        - uri:
+            prefix: /payments
+      route:
+        - destination:
+            host: payments-service
+            port:
+              number: 8080
+    # Payments service OpenAPI
+    - match:
+        - uri:
+            prefix: /payments/v3/api-docs
+      route:
+        - destination:
+            host: payments-service
+            port:
+              number: 8080
+
+    # Central Swagger UI - all paths
+    - match:
+        - uri:
+            prefix: /swagger
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: swagger-ui
+            port:
+              number: 8080
+    # Events service Swagger UI
+    - match:
+        - uri:
+            prefix: /events/events/swagger-ui
+      rewrite:
+        uri: /swagger-ui
+      route:
+        - destination:
+            host: swagger-ui
+            port:
+              number: 8080
+            port:
+              number: 8080
