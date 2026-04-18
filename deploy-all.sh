@@ -2,6 +2,9 @@
 
 # Apply all Kubernetes resources for the SeOA Project
 
+# Deploy Swagger UI
+echo "Deploying swagger-ui..."
+kubectl apply -f ./swagger-ui-service/ -n eventhub
 
 echo "Deploying events-service..."
 kubectl apply -f ./events-service/ -n eventhub

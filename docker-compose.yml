@@ -35,6 +35,18 @@ services:
     ports:
       - "${USERS_SERVICE_PORT}:${USERS_SERVICE_PORT}"
 
+  swagger-ui:
+    build: ./swagger-ui-service
+    image: swagger-ui:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - events-service
+      - notifications-service
+      - users-service
+      - ticketing-service
+      - payments-service
+
   rabbitmq:
     image: rabbitmq:3-management
     ports:
