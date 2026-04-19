@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: swagger-ui
+  namespace: eventhub
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: swagger-ui
+  template:
+    metadata:
+      labels:
+        app: swagger-ui
+    spec:
+      containers:
+      - name: swagger-ui
+        image: swagger-ui:latest
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: config
+          mountPath: /usr/share/nginx/html/config.json
+          subPath: config.json
+      volumes:
+      - name: config
+        configMap:
+          name: swagger-ui-config
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: swagger-ui-config
+  namespace: eventhub
+data:
+  config.json: |
+    {
+      "urls": [
+        {
+          "url": "/events/v3/api-docs",
+          "name": "Events Service"
+        },
+        {
+          "url": "/notifications/v3/api-docs",
+          "name": "Notifications Service"
+        },
+        {
+          "url": "/users/v3/api-docs",
+          "name": "Users Service"
+        },
+        {
+          "url": "/ticketing/v3/api-docs",
+          "name": "Ticketing Service"
+        },
+        {
+          "url": "/payments/v3/api-docs",
+          "name": "Payments Service"
+        }
+      ]
+    }
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: swagger-ui
+  namespace: eventhub
+spec:
+  selector:
+    app: swagger-ui
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

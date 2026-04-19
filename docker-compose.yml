@@ -1,6 +1,7 @@
 services:
   events-service:
     build: ./events-service
+    image: events-service:latest
     ports:
       - "${EVENTS_SERVICE_PORT}:${EVENTS_SERVICE_PORT}"
     depends_on:
@@ -8,6 +9,7 @@ services:
 
   notifications-service:
     build: ./notifications-service
+    image: notifications-service:latest
     ports:
       - "${NOTIFICATIONS_SERVICE_PORT}:${NOTIFICATIONS_SERVICE_PORT}"
     depends_on:
@@ -15,11 +17,13 @@ services:
 
   ticketing-service:
     build: ./ticketing-service
+    image: ticketing-service:latest
     ports:
       - "${TICKETING_SERVICE_PORT}:${TICKETING_SERVICE_PORT}"
 
   payments-service:
     build: ./payments-service
+    image: payments-service:latest
     ports:
       - "${PAYMENTS_SERVICE_PORT}:${PAYMENTS_SERVICE_PORT}"
     depends_on:
@@ -27,8 +31,21 @@ services:
 
   users-service:
     build: ./users-service
+    image: users-service:latest
     ports:
       - "${USERS_SERVICE_PORT}:${USERS_SERVICE_PORT}"
+
+  swagger-ui:
+    build: ./swagger-ui-service
+    image: swagger-ui:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - events-service
+      - notifications-service
+      - users-service
+      - ticketing-service
+      - payments-service
 
   rabbitmq:
     image: rabbitmq:3-management

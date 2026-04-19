@@ -1,0 +1,39 @@
+apiVersion: apps/v1 #Specifies the Kubernetes API version
+
+kind: Deployment #Defines the type of Kubernetes resource
+metadata:
+  name: users-app #name of deployment
+  namespace: eventhub
+spec: #spec of deployment
+  replicas: 1 #amount of replicas
+  selector: #defines which app to use
+    matchLabels:
+      app: users-app #defines the labelselector used by the deployer to identify and manage this deployment
+  template:
+    metadata:
+      labels:
+        app: users-app # Applies the label to the pods created by this Deployment.
+    spec: #defines the pods
+      containers: # a pod and its configurations
+        - name: users-backend #name
+          image: users-service:latest #image
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080 #port
+          envFrom:
+            - configMapRef:
+                name: service-ports
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: users-service
+  namespace: eventhub
+spec:
+  selector:
+    app: users-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+

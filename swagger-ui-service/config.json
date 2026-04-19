@@ -1,0 +1,24 @@
+{
+  "urls": [
+    {
+      "url": "/events/v3/api-docs",
+      "name": "Events Service"
+    },
+    {
+      "url": "/notifications/v3/api-docs",
+      "name": "Notifications Service"
+    },
+    {
+      "url": "/users/v3/api-docs",
+      "name": "Users Service"
+    },
+    {
+      "url": "/ticketing/v3/api-docs",
+      "name": "Ticketing Service"
+    },
+    {
+      "url": "/payments/v3/api-docs",
+      "name": "Payments Service"
+    }
+  ]
+}
