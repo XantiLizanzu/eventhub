@@ -27,6 +27,7 @@ kubectl label namespace eventhub istio-injection=enabled
 ```
 
 ### Install Istio
+note: this takes quite some time you can continue in another terminal
 ```bash
 istio-*/bin/istioctl install --set values.global.platform=minikube
 ```
@@ -47,34 +48,35 @@ eval $(minikube -p minikube docker-env)
 ```
 
 ### Build and Deploy
+note: both building and actually deploying takes quite some time, you can see the deploying progress on the dashboard
 ```bash
 docker compose build
 ./deploy-all.sh
 ```
-
-### Port Forwarding
-```bash
-kubectl port-forward -n istio-system svc/istio-ingressgateway 8080:80
-```
-
 ### To check the dashboard (in another terminal)
 ```bash
 minikube dashboard
 ```
 
+### Port Forwarding
+To access the services you will need to forward the port from the gateway.
+```bash
+kubectl port-forward -n istio-system svc/istio-ingressgateway 8080:80
+```
 
-### Access service
-Keep in mind we did not get the swagger ui to work sadly. Every api loads but requests on localhost/... instead of localhost:8080/...
-**Global swagger ui**
+## Access service
+
+### Global swagger ui
+note: you can switch service in the top right corner.
+
 http://localhost:8080/swagger/
 
-**open API specification**
-note that double naming in the address is necessary!
-This was done to get the swagger-ui to work, which it unfortunately did not in the end.
+### open API specification
+note that double naming in the address is necessary!(this was done to get events/events/swagger-ui/index.html to work)
 http://localhost:8080/events/events/v3/api-docs
 
-**example api page http://localhost:8080/events/events**
-
+### Example of an api page
+http://localhost:8080/events/events
 
 # 🛠️ Running Development
 
@@ -115,9 +117,6 @@ Then start up all containers:
 docker compose up
 ```
 
-## Environment Variables
-
-Rename `.env.template` to `.env` and update the values if necessary.
 
 ## SELinux Permission Issues
 Label directories as container_file:
