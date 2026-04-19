@@ -18,6 +18,12 @@ kubectl apply -f ./ticketing-service/ -n eventhub
 echo "Deploying payments-service..."
 kubectl apply -f ./payments-service/ -n eventhub
 
+echo "Deploying swagger-ui..."
+kubectl apply -f ./swagger-ui-service/ -n eventhub
+
+echo "Deploying istio-virtual-service..."
+kubectl apply -f ./istio-virtual-service.yaml -n eventhub
+
 echo "All services deployed successfully!"
 
 # Verify deployments

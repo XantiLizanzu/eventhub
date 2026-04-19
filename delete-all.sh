@@ -18,6 +18,12 @@ kubectl delete -f ./ticketing-service/ -n eventhub
 echo "deleting payments-service..."
 kubectl delete -f ./payments-service/ -n eventhub
 
+echo "deleting swagger-ui..."
+kubectl delete -f ./swagger-ui-service/ -n eventhub
+
+echo "deleting istio-virtual-service..."
+kubectl delete -f ./istio-virtual-service.yaml -n eventhub
+
 echo "All services deployed successfully!"
 
 # Verify deployments

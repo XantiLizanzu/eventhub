@@ -6,6 +6,11 @@ If not installed:
 curl -L https://istio.io/downloadIstio | sh -
 ```
 
+### Set up .env by copying .env.template
+```bash
+cp .env.template .env
+```
+
 ### Start Minikube
 ```bash
 minikube start --memory=8192mb --cpus=4
@@ -52,9 +57,23 @@ docker compose build
 kubectl port-forward -n istio-system svc/istio-ingressgateway 8080:80
 ```
 
-### Access the swagger ui
+### To check the dashboard (in another terminal)
+```bash
+minikube dashboard
+```
+
+
+### Access service
+Keep in mind we did not get the swagger ui to work sadly. Every api loads but requests on localhost/... instead of localhost:8080/...
+**Global swagger ui**
 http://localhost:8080/swagger/
 
+**open API specification**
+note that double naming in the address is necessary!
+This was done to get the swagger-ui to work, which it unfortunately did not in the end.
+http://localhost:8080/events/events/v3/api-docs
+
+**example api page http://localhost:8080/events/events**
 
 
 # 🛠️ Running Development

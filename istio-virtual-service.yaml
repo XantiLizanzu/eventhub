@@ -70,5 +70,4 @@ spec:
             host: swagger-ui
             port:
               number: 8080
-            port:
-              number: 8080
+

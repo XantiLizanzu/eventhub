@@ -1,23 +1,23 @@
 {
   "urls": [
     {
-      "url": "/events/v3/api-docs",
+      "url": "http://localhost:8080/events/v3/api-docs",
       "name": "Events Service"
     },
     {
-      "url": "/notifications/v3/api-docs",
+      "url": "http://localhost:8080/notifications/v3/api-docs",
       "name": "Notifications Service"
     },
     {
-      "url": "/users/v3/api-docs",
+      "url": "http://localhost:8080/users/v3/api-docs",
       "name": "Users Service"
     },
     {
-      "url": "/ticketing/v3/api-docs",
+      "url": "http://localhost:8080/ticketing/v3/api-docs",
       "name": "Ticketing Service"
     },
     {
-      "url": "/payments/v3/api-docs",
+      "url": "http://localhost:8080/payments/v3/api-docs",
       "name": "Payments Service"
     }
   ]
