@@ -2,10 +2,12 @@
 package nl.eventhub.ticketing_service.services;
 
 import jakarta.annotation.PostConstruct;
+import nl.eventhub.ticketing_service.models.EventResponseDTO;
 import nl.eventhub.ticketing_service.models.Ticket;
 import nl.eventhub.ticketing_service.models.TicketStatus;
 import nl.eventhub.ticketing_service.repositories.TicketingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +24,16 @@ public class TicketingService {
     private PaymentClient paymentClient;
 
     @Autowired
-    public TicketingService(TicketingRepository ticketingRepository) {
+    private EventClient eventClient;
+
+    @Autowired
+    public TicketingService(
+            TicketingRepository ticketingRepository,
+            PaymentClient paymentClient,
+            EventClient eventClient) {
         this.ticketingRepository = ticketingRepository;
+        this.paymentClient = paymentClient;
+        this.eventClient = eventClient;
     }
 
     @PostConstruct
@@ -39,11 +49,27 @@ public class TicketingService {
         }
     }
 
-    public Ticket reserveTicket(long eventId, long userId) {
+    public Optional<Ticket> reserveTicket(long eventId, long userId) {
+        // Fetch the event details
+        ResponseEntity<EventResponseDTO> eventResponse = eventClient.getEventResponse(eventId);
+
+        // Check if the response is an error
+        if (eventResponse.getStatusCode().isError()) {
+            return Optional.empty();
+        }
+
+        // Check if there are no available tickets
+        EventResponseDTO event = eventResponse.getBody();
+        if (event == null || event.getAvailableTickets() <= 0) {
+            return Optional.empty();
+        }
+
+        // Proceed with ticket creation and reservation
         Ticket ticket = new Ticket(userId, eventId, LocalDateTime.now(), TicketStatus.RESERVED);
         Ticket newTicket = ticketingRepository.save(ticket);
         paymentClient.pay(newTicket.getId());
-        return newTicket;
+
+        return Optional.of(newTicket);
     }
 
     public Optional<Ticket> unreserveTicket(long ticketId) {
