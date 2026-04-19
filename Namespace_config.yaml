@@ -1,0 +1,18 @@
+apiVersion: v1 #Specifies the Kubernetes API version
+kind: Namespace #Defines the the type of Kubernetes resource
+
+metadata:
+  name: eventhub
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-ports
+  namespace: eventhub
+data:
+  EVENTS_SERVICE_PORT: "8080"
+  NOTIFICATIONS_SERVICE_PORT: "8080"
+  USERS_SERVICE_PORT: "8080"
+  TICKETING_SERVICE_PORT: "8080"
+  PAYMENTS_SERVICE_PORT: "8080"
